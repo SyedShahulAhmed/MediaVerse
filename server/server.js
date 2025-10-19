@@ -15,7 +15,15 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Middlewares
-app.use(cors());
+// ✅ FIXED CORS CONFIG
+app.use(cors({
+  origin: [
+    "http://localhost:5173", // your local React dev
+    "https://mediaverse-seven.vercel.app" // your deployed frontend
+  ],
+  credentials: true, // allow cookies, auth headers, etc.
+}));
+
 app.use(express.json());
 
 // Routes
