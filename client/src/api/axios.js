@@ -3,7 +3,9 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  withCredentials: true, // this tells axios to send cookies/tokens
 });
+
 
 // ✅ Add token automatically for every request
 API.interceptors.request.use((config) => {
