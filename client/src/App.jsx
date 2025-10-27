@@ -1,3 +1,4 @@
+// src/App.jsx
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,69 +14,71 @@ import Profile from "./pages/Profile.jsx";
 import Analytics from "./pages/Analytics.jsx";
 import PublicProfile from "./pages/PublicProfile.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import NotFound from "./components/NotFound.jsx";
+import BadgesPage from "./pages/Badges.jsx";
+import Followers from "./pages/Followers.jsx";
+import Following from "./pages/Following.jsx";
+import CommunityFeed from "./pages/CommunityFeed.jsx";
+import Settings from "./pages/Settings.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 import { Toaster } from "react-hot-toast";
+import VerifyOTP from "./pages/VerifyOTP.jsx";
 
 export default function App() {
   return (
     <Router>
-      {/* ✅ Global Toast Provider (place it here, once only) */}
+      {/* ✅ Global Toaster — visible across all pages */}
       <Toaster
         position="top-right"
+        reverseOrder={false}
         toastOptions={{
-          duration: 1800,
+          duration: 5000,
           style: {
-            background: "linear-gradient(135deg, #0b0b0f 0%, #151518 100%)",
-            color: "#e5e5e5",
+            background: "rgba(31, 27, 46, 0.95)",
+            color: "#fff",
+            border: "1px solid rgba(216,180,254,0.5)",
             borderRadius: "10px",
-            padding: "10px 16px",
-            border: "1px solid rgba(147, 51, 234, 0.3)", // soft purple border
-            boxShadow:
-              "0 0 15px rgba(147, 51, 234, 0.2), 0 0 30px rgba(236, 72, 153, 0.1)",
-            backdropFilter: "blur(8px)", // glassy blur
-            marginTop: "70px",
-            fontFamily: "'Inter', sans-serif",
-            letterSpacing: "0.3px",
-            fontSize: "0.9rem",
+            padding: "12px 16px",
+            boxShadow: "0 0 25px rgba(168,85,247,0.4)",
+            backdropFilter: "blur(6px)",
+            zIndex: 99999, // 🔥 keeps it above everything
           },
           success: {
             iconTheme: {
-              primary: "#a855f7", // glowing purple
-              secondary: "#0b0b0f",
-            },
-            style: {
-              background:
-                "linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.2))",
-              border: "1px solid rgba(168,85,247,0.5)",
-              boxShadow:
-                "0 0 20px rgba(168,85,247,0.3), 0 0 40px rgba(236,72,153,0.2)",
-              color: "#fff",
+              primary: "#a855f7",
+              secondary: "#fff",
             },
           },
           error: {
             iconTheme: {
-              primary: "#fb7185",
-              secondary: "#0b0b0f",
-            },
-            style: {
-              background:
-                "linear-gradient(135deg, rgba(239,68,68,0.3), rgba(190,18,60,0.2))",
-              border: "1px solid rgba(239,68,68,0.5)",
-              boxShadow: "0 0 20px rgba(239,68,68,0.3)",
-              color: "#fff",
+              primary: "#ef4444",
+              secondary: "#fff",
             },
           },
         }}
       />
 
-      {/* ✅ Your app layout and routes */}
+      {/* ✅ App Layout Wrapper */}
       <Layout>
         <Routes>
-          {/* Public routes */}
+          {/* 🌐 Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/profile/badges" element={<BadgesPage />} />
+          <Route path="/followers" element={<Followers />} />
+          <Route path="/following" element={<Following />} />
+          <Route path="/community" element={<CommunityFeed />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/u/:username" element={<PublicProfile />} />
 
-          {/* Protected routes */}
+          {/* 🔐 Protected Routes */}
           <Route
             path="/dashboard"
             element={
@@ -101,10 +104,8 @@ export default function App() {
             }
           />
 
-          {/* Public user profile */}
-          <Route path="/u/:username" element={<PublicProfile />} />
-
-          {/* Catch-all */}
+          {/* 🚫 Fallback Routes */}
+          <Route path="/not-found" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>
