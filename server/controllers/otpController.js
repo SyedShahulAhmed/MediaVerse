@@ -5,14 +5,17 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// Setup transporter
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465, // secure SMTP port
+  secure: true,
   auth: {
-    user: process.env.GMAIL_USER, // your Gmail
-    pass: process.env.GMAIL_PASS, // your App Password (not Gmail password!)
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
   },
 });
+
 
 // SEND OTP
 export const sendOTP = async (req, res) => {
