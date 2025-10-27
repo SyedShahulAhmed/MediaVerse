@@ -1,46 +1,21 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import connectDB from './config/db.js';
-import authRoutes from './routes/auth.js';
-import mediaRoutes from './routes/media.js';
-import userRoutes from "./routes/user.js";
-// Load environment variables
-dotenv.config();
+import dotenv from "dotenv";
+dotenv.config(); // Load environment variables first
 
-const app = express();
+import express from "express";
+import connectDB from "./config/db.js";
+import app from "./app.js";
+
+// Environment setup
 const PORT = process.env.PORT || 5000;
 
-// Connect DB
+// Connect to MongoDB
 connectDB();
 
-// Middlewares
-// ✅ FIXED CORS CONFIG
-app.use(cors({
-  origin: [
-    "http://localhost:5173", // your local React dev
-    "https://mediaverse-seven.vercel.app" // your deployed frontend
-  ],
-  credentials: true, // allow cookies, auth headers, etc.
-}));
-
-app.use(express.json());
-
-// Routes
-app.get('/', (req, res) => {
-  res.json({ ok: true, message: 'MediaVerse Keeper API running (ESM)' });
-});
-
-app.use('/api/auth', authRoutes);
-app.use('/api/media', mediaRoutes);
-app.use("/api/users", userRoutes);
-
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Server error', message: err.message });
-});
-
+/* =========================================================
+   🚀 START EXPRESS SERVER
+========================================================= */
 app.listen(PORT, () => {
-  console.log(`🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`Server running at http://localhost:${PORT}`);
+  }
 });
