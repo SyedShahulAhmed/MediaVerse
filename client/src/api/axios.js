@@ -2,18 +2,27 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
-  withCredentials: true, // this tells axios to send cookies/tokens
+  baseURL: "https://mediaverse-g74z.onrender.com/api", // ✅ deployed backend URL
+  withCredentials: true,
 });
 
-
-// ✅ Add token automatically for every request
+// ✅ Attach token automatically
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
+// 👥 Follow routes — returns JSON directly
+export const followUser = async (userId) => {
+  const { data } = await API.post(`/users/follow/${userId}`);
+  return data; // { message, followersCount, newBadges }
+};
+
+export const unfollowUser = async (userId) => {
+  const { data } = await API.post(`/users/unfollow/${userId}`);
+  return data; // { message, followersCount }
+};
+
+// ✅ Default export
 export default API;
