@@ -1,8 +1,30 @@
-import { Link } from "react-router-dom";
-import { Film, Book, Gamepad2, BarChart3, User } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Film, Book, Gamepad2, BarChart3, User, Plus } from "lucide-react";
 import hero from "../assets/hero.png";
+import HomeLoader from "../components/HomeLoader";
 
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user token exists
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+
+    // Simulate initial load delay
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+  if (loading) return <HomeLoader />;
+
   return (
     <div className="min-h-screen bg-[#0d0d0f] text-white flex flex-col items-center justify-center overflow-hidden">
       {/* 🌌 Hero Section */}
@@ -24,19 +46,42 @@ export default function Home() {
             Your personal digital vault for movies, series, anime, books, and
             games — track, analyze, and showcase your media journey beautifully.
           </p>
+
+          {/* 🧭 Conditional Buttons */}
           <div className="flex justify-center gap-4">
-            <Link
-              to="/signup"
-              className="bg-gradient-to-r from-purple-600 to-fuchsia-500 px-6 py-3 rounded-lg text-lg font-semibold hover:opacity-90 transition-all shadow-[0_0_15px_rgba(155,92,246,0.5)]"
-            >
-              Get Started
-            </Link>
-            <Link
-              to="/login"
-              className="border border-purple-500/60 px-6 py-3 rounded-lg text-lg font-semibold text-purple-400 hover:bg-purple-600/20 transition-all"
-            >
-              Login
-            </Link>
+            {!isLoggedIn ? (
+              <>
+                <Link
+                  to="/signup"
+                  className="bg-gradient-to-r from-purple-600 to-fuchsia-500 px-6 py-3 rounded-lg text-lg font-semibold hover:opacity-90 transition-all shadow-[0_0_15px_rgba(155,92,246,0.5)]"
+                >
+                  Get Started
+                </Link>
+                <Link
+                  to="/login"
+                  className="border border-purple-500/60 px-6 py-3 rounded-lg text-lg font-semibold text-purple-400 hover:bg-purple-600/20 transition-all"
+                >
+                  Login
+                </Link>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => navigate("/dashboard")}
+                  className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-fuchsia-500 px-6 py-3 rounded-lg text-lg font-semibold hover:opacity-90 transition-all shadow-[0_0_15px_rgba(155,92,246,0.5)]"
+                >
+                  <Plus size={20} />
+                  Add Entry
+                </button>
+                <button
+                  onClick={() => navigate("/analytics")}
+                  className="flex items-center gap-2 border border-purple-500/60 px-6 py-3 rounded-lg text-lg font-semibold text-purple-400 hover:bg-purple-600/20 transition-all"
+                >
+                  <BarChart3 size={20} />
+                  View Analytics
+                </button>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -91,21 +136,23 @@ export default function Home() {
       </section>
 
       {/* 💜 CTA Section */}
-      <section className="text-center py-16 px-6 bg-gradient-to-r from-purple-800/10 to-fuchsia-800/10 w-full border-t border-purple-900/20">
-        <h2 className="text-3xl font-semibold text-purple-400 mb-4">
-          Start Your Media Journey Today 🚀
-        </h2>
-        <p className="text-gray-400 mb-8">
-          Join thousands of users organizing and tracking their entertainment
-          collections in one sleek platform.
-        </p>
-        <Link
-          to="/signup"
-          className="bg-gradient-to-r from-purple-600 to-fuchsia-500 px-8 py-3 rounded-lg text-lg font-semibold hover:opacity-90 transition-all shadow-[0_0_15px_rgba(155,92,246,0.4)]"
-        >
-          Sign Up for Free
-        </Link>
-      </section>
+      {!isLoggedIn && (
+        <section className="text-center py-16 px-6 bg-gradient-to-r from-purple-800/10 to-fuchsia-800/10 w-full border-t border-purple-900/20">
+          <h2 className="text-3xl font-semibold text-purple-400 mb-4">
+            Start Your Media Journey Today 🚀
+          </h2>
+          <p className="text-gray-400 mb-8">
+            Join thousands of users organizing and tracking their entertainment
+            collections in one sleek platform.
+          </p>
+          <Link
+            to="/signup"
+            className="bg-gradient-to-r from-purple-600 to-fuchsia-500 px-8 py-3 rounded-lg text-lg font-semibold hover:opacity-90 transition-all shadow-[0_0_15px_rgba(155,92,246,0.4)]"
+          >
+            Sign Up for Free
+          </Link>
+        </section>
+      )}
     </div>
   );
 }

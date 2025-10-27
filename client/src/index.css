@@ -14,7 +14,6 @@ body {
 /* 🎨 Ensure dark mode consistency */
 :root {
   color-scheme: dark;
-  
 }
 
 /* 🧠 Optional theme handling (if you toggle light/dark) */
@@ -82,6 +81,19 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 0 8px rgba(147, 51, 234, 0.4);
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-in-out;
+}
 
 /* Hover effect */
 ::-webkit-scrollbar-thumb:hover {
@@ -102,4 +114,57 @@ html {
 * {
   scrollbar-width: thin;
   scrollbar-color: #9333ea #0d0d0f;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+@layer utilities {
+  @keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes sparkle {
+    0%, 100% { transform: scale(0.8) translateY(0); opacity: 0.7; }
+    50% { transform: scale(1.3) translateY(-2px); opacity: 1; }
+  }
+
+  @keyframes sparkle-delayed {
+    0%, 100% { transform: scale(0.8) translateY(0); opacity: 0.7; }
+    50% { transform: scale(1.2) translateY(2px); opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 4s linear infinite;
+  }
+
+  .animate-sparkle {
+    animation: sparkle 1.8s ease-in-out infinite;
+  }
+
+  .animate-sparkle-delayed {
+    animation: sparkle-delayed 2s ease-in-out infinite 0.4s;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.8s ease-out;
+  }
 }

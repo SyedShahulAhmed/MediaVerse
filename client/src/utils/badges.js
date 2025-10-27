@@ -1,0 +1,898 @@
+// 🏅 FRONTEND BADGE DEFINITIONS (Must match backend IDs exactly)
+
+export const badgeRules = [
+  // 🧩 1. MEDIA ADDITION BADGES
+  {
+    id: "first_entry",
+    icon: "🌟",
+    name: "First Entry",
+    description: "Added your first media entry — welcome aboard!",
+  },
+  {
+    id: "media_collector",
+    icon: "📦",
+    name: "Media Collector",
+    description: "Added 10 total entries — you're on a roll!",
+  },
+  {
+    id: "media_enthusiast",
+    icon: "🎯",
+    name: "Media Enthusiast",
+    description: "25 total entries — growing your collection fast!",
+  },
+  {
+    id: "media_master",
+    icon: "🏆",
+    name: "Media Master",
+    description: "50 entries added — you’re a true media explorer!",
+  },
+  {
+    id: "media_elite",
+    icon: "💎",
+    name: "Media Elite",
+    description: "100 total entries — you're reaching pro level!",
+  },
+  {
+    id: "media_legend",
+    icon: "🔥",
+    name: "Media Legend",
+    description: "200 total entries — passion at full power!",
+  },
+  {
+    id: "media_icon",
+    icon: "👑",
+    name: "Media Icon",
+    description: "300 total entries — your taste defines culture!",
+  },
+  {
+    id: "media_grandmaster",
+    icon: "🌌",
+    name: "Media Grandmaster",
+    description: "400 total entries — exploring every corner of media!",
+  },
+  {
+    id: "media_legendary_collector",
+    icon: "💫",
+    name: "Legendary Collector",
+    description: "500 total entries — your dedication is unmatched!",
+  },
+  {
+    id: "media_immortal",
+    icon: "⚡",
+    name: "Media Immortal",
+    description: "1000 total entries — a timeless legend of media!",
+  },
+  // 🎬 2. TYPE-BASED BADGES
+  // 🎬 MOVIES
+  {
+    id: "movie_lover",
+    icon: "🎬",
+    name: "Movie Lover",
+    description: "Added 10 movies — cinema buff in the making!",
+  },
+  {
+    id: "movie_enthusiast",
+    icon: "🎬",
+    name: "Movie Enthusiast",
+    description: "Added 20 movies — consistent and growing taste!",
+  },
+  {
+    id: "movie_collector",
+    icon: "🎬",
+    name: "Movie Collector",
+    description: "Added 50 movies — deeply invested!",
+  },
+  {
+    id: "movie_expert",
+    icon: "🎬",
+    name: "Movie Expert",
+    description: "Added 100 movies — true expert of your kind!",
+  },
+  {
+    id: "movie_pro",
+    icon: "🎬",
+    name: "Movie Pro",
+    description: "Added 200 movies — unstoppable dedication!",
+  },
+  {
+    id: "movie_legend",
+    icon: "🎬",
+    name: "Movie Legend",
+    description: "Added 300 movies — mastery unlocked!",
+  },
+  {
+    id: "movie_icon",
+    icon: "🎬",
+    name: "Movie Icon",
+    description: "Added 400 movies — shaping the culture!",
+  },
+  {
+    id: "movie_grandmaster",
+    icon: "🎬",
+    name: "Movie Grandmaster",
+    description: "Added 500 movies — your passion is unmatched!",
+  },
+  {
+    id: "movie_immortal",
+    icon: "🎬",
+    name: "Movie Immortal",
+    description: "Added 1000 movies — you’re a timeless legend!",
+  },
+
+  // 📺 SERIES
+  {
+    id: "series_binger",
+    icon: "📺",
+    name: "Series Binger",
+    description: "Added 10 series — binge mode activated!",
+  },
+  {
+    id: "series_enthusiast",
+    icon: "📺",
+    name: "Series Enthusiast",
+    description: "Added 20 series — consistent and growing taste!",
+  },
+  {
+    id: "series_collector",
+    icon: "📺",
+    name: "Series Collector",
+    description: "Added 50 series — deeply invested!",
+  },
+  {
+    id: "series_expert",
+    icon: "📺",
+    name: "Series Expert",
+    description: "Added 100 series — true expert of your kind!",
+  },
+  {
+    id: "series_pro",
+    icon: "📺",
+    name: "Series Pro",
+    description: "Added 200 series — unstoppable dedication!",
+  },
+  {
+    id: "series_legend",
+    icon: "📺",
+    name: "Series Legend",
+    description: "Added 300 series — mastery unlocked!",
+  },
+  {
+    id: "series_icon",
+    icon: "📺",
+    name: "Series Icon",
+    description: "Added 400 series — shaping the culture!",
+  },
+  {
+    id: "series_grandmaster",
+    icon: "📺",
+    name: "Series Grandmaster",
+    description: "Added 500 series — your passion is unmatched!",
+  },
+  {
+    id: "series_immortal",
+    icon: "📺",
+    name: "Series Immortal",
+    description: "Added 1000 series — you’re a timeless legend!",
+  },
+
+  // 📚 BOOKS
+  {
+    id: "bookworm",
+    icon: "📚",
+    name: "Bookworm",
+    description: "Added 10 books — reading legend!",
+  },
+  {
+    id: "book_enthusiast",
+    icon: "📚",
+    name: "Book Enthusiast",
+    description: "Added 20 books — consistent and growing taste!",
+  },
+  {
+    id: "book_collector",
+    icon: "📚",
+    name: "Book Collector",
+    description: "Added 50 books — bibliophile vibes!",
+  },
+  {
+    id: "book_expert",
+    icon: "📚",
+    name: "Book Expert",
+    description: "Added 100 books — true expert of your kind!",
+  },
+  {
+    id: "book_pro",
+    icon: "📚",
+    name: "Book Pro",
+    description: "Added 200 books — unstoppable dedication!",
+  },
+  {
+    id: "book_legend",
+    icon: "📚",
+    name: "Book Legend",
+    description: "Added 300 books — mastery unlocked!",
+  },
+  {
+    id: "book_icon",
+    icon: "📚",
+    name: "Book Icon",
+    description: "Added 400 books — shaping the culture!",
+  },
+  {
+    id: "book_grandmaster",
+    icon: "📚",
+    name: "Book Grandmaster",
+    description: "Added 500 books — your passion is unmatched!",
+  },
+  {
+    id: "book_immortal",
+    icon: "📚",
+    name: "Book Immortal",
+    description: "Added 1000 books — you’re a timeless legend!",
+  },
+
+  // 🎮 GAMES
+  {
+    id: "game_player",
+    icon: "🎮",
+    name: "Game Player",
+    description: "Added 10 games — unstoppable gamer!",
+  },
+  {
+    id: "game_enthusiast",
+    icon: "🎮",
+    name: "Game Enthusiast",
+    description: "Added 20 games — consistent and growing taste!",
+  },
+  {
+    id: "game_collector",
+    icon: "🎮",
+    name: "Game Collector",
+    description: "Added 50 games — deeply invested!",
+  },
+  {
+    id: "game_expert",
+    icon: "🎮",
+    name: "Game Expert",
+    description: "Added 100 games — true expert of your kind!",
+  },
+  {
+    id: "game_pro",
+    icon: "🎮",
+    name: "Game Pro",
+    description: "Added 200 games — unstoppable dedication!",
+  },
+  {
+    id: "game_legend",
+    icon: "🎮",
+    name: "Game Legend",
+    description: "Added 300 games — mastery unlocked!",
+  },
+  {
+    id: "game_icon",
+    icon: "🎮",
+    name: "Game Icon",
+    description: "Added 400 games — shaping the culture!",
+  },
+  {
+    id: "game_grandmaster",
+    icon: "🎮",
+    name: "Game Grandmaster",
+    description: "Added 500 games — your passion is unmatched!",
+  },
+  {
+    id: "game_immortal",
+    icon: "🎮",
+    name: "Game Immortal",
+    description: "Added 1000 games — you’re a timeless legend!",
+  },
+  // 🎞️ ANIME
+  {
+    id: "anime_lover",
+    icon: "🎞️",
+    name: "Anime Lover",
+    description: "Added 10 anime — otaku journey begins!",
+  },
+  {
+    id: "anime_enthusiast",
+    icon: "🎞️",
+    name: "Anime Enthusiast",
+    description: "Added 20 anime — consistent and growing taste!",
+  },
+  {
+    id: "anime_collector",
+    icon: "🎞️",
+    name: "Anime Collector",
+    description: "Added 50 anime — deeply immersed in the world of animation!",
+  },
+  {
+    id: "anime_expert",
+    icon: "🎞️",
+    name: "Anime Expert",
+    description: "Added 100 anime — a true anime connoisseur!",
+  },
+  {
+    id: "anime_pro",
+    icon: "🎞️",
+    name: "Anime Pro",
+    description: "Added 200 anime — your watchlist never ends!",
+  },
+  {
+    id: "anime_legend",
+    icon: "🎞️",
+    name: "Anime Legend",
+    description: "Added 300 anime — you live and breathe anime!",
+  },
+  {
+    id: "anime_icon",
+    icon: "🎞️",
+    name: "Anime Icon",
+    description: "Added 400 anime — influencing anime culture itself!",
+  },
+  {
+    id: "anime_grandmaster",
+    icon: "🎞️",
+    name: "Anime Grandmaster",
+    description: "Added 500 anime — your dedication is unmatched!",
+  },
+  {
+    id: "anime_immortal",
+    icon: "🎞️",
+    name: "Anime Immortal",
+    description: "Added 1000 anime — a timeless legend of otaku culture!",
+  },
+
+  {
+    id: "genre_explorer",
+    icon: "🎭",
+    name: "Genre Explorer",
+    description: "Added media in 8 unique genres — diverse taste unlocked!",
+  },
+  {
+    id: "genre_connoisseur",
+    icon: "🎭",
+    name: "Genre Connoisseur",
+    description: "Explored 15 unique genres — variety is your strength!",
+  },
+  {
+    id: "genre_master",
+    icon: "🎭",
+    name: "Genre Master",
+    description: "25 genres experienced — an encyclopedia of taste!",
+  },
+  {
+    id: "genre_grandmaster",
+    icon: "🎭",
+    name: "Genre Grandmaster",
+    description: "35 genres explored — a true cultural polymath!",
+  },
+  {
+    id: "genre_omnivore",
+    icon: "🎭",
+    name: "Genre Omnivore",
+    description: "50 unique genres — you’ve mastered diversity itself!",
+  },
+
+  {
+    id: "platform_hopper",
+    icon: "🧭",
+    name: "Platform Hopper",
+    description: "Used 5 different platforms — explorer mode!",
+  },
+  {
+    id: "platform_explorer",
+    icon: "🧭",
+    name: "Platform Explorer",
+    description: "10 platforms — you’re discovering new sources constantly!",
+  },
+  {
+    id: "platform_master",
+    icon: "🧭",
+    name: "Platform Master",
+    description: "15 platforms — you’re a digital wanderer!",
+  },
+  {
+    id: "platform_grandmaster",
+    icon: "🧭",
+    name: "Platform Grandmaster",
+    description: "25 platforms — a true media nomad!",
+  },
+  {
+    id: "platform_omnivore",
+    icon: "🧭",
+    name: "Platform Omnivore",
+    description: "40 platforms — your reach spans the whole media world!",
+  },
+
+  {
+    id: "mood_explorer",
+    icon: "🌈",
+    name: "Mood Explorer",
+    description: "Logged 5 different moods — emotional range unlocked!",
+  },
+  {
+    id: "mood_seeker",
+    icon: "🌈",
+    name: "Mood Seeker",
+    description: "10 moods — an expressive and introspective viewer!",
+  },
+  {
+    id: "mood_master",
+    icon: "🌈",
+    name: "Mood Master",
+    description: "15 moods — you experience every emotion through media!",
+  },
+  {
+    id: "mood_grandmaster",
+    icon: "🌈",
+    name: "Mood Grandmaster",
+    description: "25 moods — you feel the full human spectrum!",
+  },
+  {
+    id: "mood_empath",
+    icon: "🌈",
+    name: "Mood Empath",
+    description: "40 moods — your empathy transcends storytelling!",
+  },
+
+  {
+    id: "language_traveler",
+    icon: "🌍",
+    name: "Language Traveler",
+    description: "Watched or read in 5 different languages — global citizen!",
+  },
+  {
+    id: "language_explorer",
+    icon: "🌍",
+    name: "Language Explorer",
+    description: "Explored 10 languages — multilingual marvel!",
+  },
+  {
+    id: "language_master",
+    icon: "🌍",
+    name: "Language Master",
+    description: "20 languages — media polyglot unlocked!",
+  },
+  {
+    id: "language_grandmaster",
+    icon: "🌍",
+    name: "Language Grandmaster",
+    description: "30 languages — a cultural bridge through stories!",
+  },
+  {
+    id: "language_omniglot",
+    icon: "🌍",
+    name: "Language Omniglot",
+    description: "50 languages — global mastery achieved!",
+  },
+
+  // 🥇 4. FIRST-TIME CATEGORY BADGES
+  {
+    id: "first_genre_added",
+    icon: "🎭",
+    name: "Genre Beginner",
+    description: "Added your first genre — your taste journey begins!",
+  },
+  {
+    id: "genre_explorer_plus",
+    icon: "🎭",
+    name: "Genre Explorer+",
+    description: "Added 5 unique genres — branching into new interests!",
+  },
+  {
+    id: "genre_collector",
+    icon: "🎭",
+    name: "Genre Collector",
+    description: "Added 10 unique genres — truly diverse in taste!",
+  },
+  {
+    id: "genre_expert",
+    icon: "🎭",
+    name: "Genre Expert",
+    description: "Added 20 genres — your taste knows no limits!",
+  },
+  {
+    id: "genre_legend",
+    icon: "🎭",
+    name: "Genre Legend",
+    description: "30 genres — a cultural curator with unmatched range!",
+  },
+
+  {
+    id: "first_platform_added",
+    icon: "🧭",
+    name: "Platform Starter",
+    description: "Added your first platform — exploring new media sources!",
+  },
+  {
+    id: "platform_explorer_plus",
+    icon: "🧭",
+    name: "Platform Explorer+",
+    description: "Added 5 platforms — expanding your horizons!",
+  },
+  {
+    id: "platform_collector",
+    icon: "🧭",
+    name: "Platform Collector",
+    description: "Added 10 platforms — ultimate multi-platform user!",
+  },
+  {
+    id: "platform_expert",
+    icon: "🧭",
+    name: "Platform Expert",
+    description: "Added 15 platforms — a veteran of media exploration!",
+  },
+  {
+    id: "platform_legend",
+    icon: "🧭",
+    name: "Platform Legend",
+    description: "25 platforms — you’ve seen it all!",
+  },
+
+  {
+    id: "first_language_added",
+    icon: "🌍",
+    name: "Language Explorer",
+    description: "Added your first language — multilingual adventure starts!",
+  },
+  {
+    id: "language_collector",
+    icon: "🌍",
+    name: "Language Collector",
+    description: "Added 5 languages — global media enthusiast!",
+  },
+  {
+    id: "language_master",
+    icon: "🌍",
+    name: "Language Master",
+    description: "Added 10 languages — true multilingual watcher!",
+  },
+  {
+    id: "language_scholar",
+    icon: "🌍",
+    name: "Language Scholar",
+    description: "15 languages — your curiosity spans the globe!",
+  },
+  {
+    id: "language_legend",
+    icon: "🌍",
+    name: "Language Legend",
+    description: "25 languages — cultural fluency achieved!",
+  },
+
+  {
+    id: "first_mood_logged",
+    icon: "🌈",
+    name: "Mood Starter",
+    description: "Logged your first mood — discovering your vibe!",
+  },
+  {
+    id: "mood_collector",
+    icon: "🌈",
+    name: "Mood Collector",
+    description: "Logged 5 moods — feeling the full spectrum!",
+  },
+  {
+    id: "mood_master_plus",
+    icon: "🌈",
+    name: "Mood Master+",
+    description: "Logged 10 moods — emotionally aware storyteller!",
+  },
+  {
+    id: "mood_expert_plus",
+    icon: "🌈",
+    name: "Mood Expert+",
+    description: "Logged 15 moods — a master of emotional range!",
+  },
+  {
+    id: "mood_legend",
+    icon: "🌈",
+    name: "Mood Legend",
+    description: "Logged 25 moods — emotionally fluent in every genre!",
+  },
+
+  // 🤝 5. SOCIAL BADGES (Following others)
+  {
+    id: "friendly_follower",
+    icon: "🤝",
+    name: "Friendly Follower",
+    description: "Followed your first user — connections begin!",
+  },
+  {
+    id: "community_member",
+    icon: "💬",
+    name: "Community Member",
+    description: "Followed 5 users — part of the community!",
+  },
+  {
+    id: "social_explorer",
+    icon: "🎉",
+    name: "Social Explorer",
+    description: "Followed 10 users — social butterfly!",
+  },
+  {
+    id: "social_connector",
+    icon: "🔗",
+    name: "Social Connector",
+    description: "Followed 20 users — building meaningful networks!",
+  },
+  {
+    id: "network_builder",
+    icon: "🌐",
+    name: "Network Builder",
+    description: "Followed 30 users — expanding your social world!",
+  },
+  {
+    id: "community_champion",
+    icon: "🏅",
+    name: "Community Champion",
+    description: "Followed 50 users — fully engaged in the community!",
+  },
+  {
+    id: "super_connector",
+    icon: "🚀",
+    name: "Super Connector",
+    description: "Followed 75 users — inspiring interaction everywhere!",
+  },
+  {
+    id: "social_legend",
+    icon: "👑",
+    name: "Social Legend",
+    description: "Followed 100 users — true pillar of the community!",
+  },
+  // 💫 6. POPULARITY BADGES (Being followed)
+  {
+    id: "rising_star",
+    icon: "🌟",
+    name: "Rising Star",
+    description: "Gained 5 followers — people love your taste!",
+  },
+  {
+    id: "trendsetter",
+    icon: "🔥",
+    name: "Trendsetter",
+    description: "15 followers — your profile is trending!",
+  },
+  {
+    id: "influencer",
+    icon: "👑",
+    name: "Influencer",
+    description: "30 followers — your opinions shape the community!",
+  },
+  {
+    id: "notable_creator",
+    icon: "🏅",
+    name: "Notable Creator",
+    description: "50 followers — your presence stands out in the feed!",
+  },
+  {
+    id: "celebrity_member",
+    icon: "💫",
+    name: "Celebrity Member",
+    description: "75 followers — a recognized name in the community!",
+  },
+  {
+    id: "popular_icon",
+    icon: "🚀",
+    name: "Popular Icon",
+    description: "100 followers — a true influencer in MediaVerse!",
+  },
+  {
+    id: "genre_fan_5",
+    icon: "🎭",
+    name: "Genre Enthusiast",
+    description: "Added 5 genre entries — your journey begins!",
+  },
+  {
+    id: "genre_fan_10",
+    icon: "🔥",
+    name: "Genre Lover",
+    description: "Added 10 genre entries — passion awakened!",
+  },
+  {
+    id: "genre_fan_25",
+    icon: "⭐",
+    name: "Genre Buff",
+    description: "25 genre entries — your taste is evolving!",
+  },
+  {
+    id: "genre_fan_50",
+    icon: "🏅",
+    name: "Genre Expert",
+    description: "50 genre entries — mastery level achieved!",
+  },
+  {
+    id: "genre_fan_100",
+    icon: "👑",
+    name: "Genre Master",
+    description: "100 genre entries — you’ve become a true genre master!",
+  },
+
+  // 🎬 Per-Genre (Auto-Generated Feel)
+  {
+    id: "action_fan_5",
+    icon: "🎭",
+    name: "Action Enthusiast",
+    description: "Added 5 Action entries — your journey begins!",
+  },
+  {
+    id: "romance_fan_5",
+    icon: "🎭",
+    name: "Romance Enthusiast",
+    description: "Added 5 Romance entries — your journey begins!",
+  },
+  {
+    id: "horror_fan_5",
+    icon: "🎭",
+    name: "Horror Enthusiast",
+    description: "Added 5 Horror entries — your journey begins!",
+  },
+  {
+    id: "comedy_fan_5",
+    icon: "🎭",
+    name: "Comedy Enthusiast",
+    description: "Added 5 Comedy entries — your journey begins!",
+  },
+  {
+    id: "drama_fan_5",
+    icon: "🎭",
+    name: "Drama Enthusiast",
+    description: "Added 5 Drama entries — your journey begins!",
+  },
+  {
+    id: "sci-fi_fan_5",
+    icon: "🎭",
+    name: "Sci-Fi Enthusiast",
+    description: "Added 5 Sci-Fi entries — your journey begins!",
+  },
+  {
+    id: "fantasy_fan_5",
+    icon: "🎭",
+    name: "Fantasy Enthusiast",
+    description: "Added 5 Fantasy entries — your journey begins!",
+  },
+  {
+    id: "thriller_fan_5",
+    icon: "🎭",
+    name: "Thriller Enthusiast",
+    description: "Added 5 Thriller entries — your journey begins!",
+  },
+  {
+    id: "adventure_fan_5",
+    icon: "🎭",
+    name: "Adventure Enthusiast",
+    description: "Added 5 Adventure entries — your journey begins!",
+  },
+  {
+    id: "mystery_fan_5",
+    icon: "🎭",
+    name: "Mystery Enthusiast",
+    description: "Added 5 Mystery entries — your journey begins!",
+  },
+  {
+    id: "documentary_fan_5",
+    icon: "🎭",
+    name: "Documentary Enthusiast",
+    description: "Added 5 Documentary entries — your journey begins!",
+  },
+  {
+    id: "animation_fan_5",
+    icon: "🎭",
+    name: "Animation Enthusiast",
+    description: "Added 5 Animation entries — your journey begins!",
+  },
+  {
+    id: "crime_fan_5",
+    icon: "🎭",
+    name: "Crime Enthusiast",
+    description: "Added 5 Crime entries — your journey begins!",
+  },
+  {
+    id: "historical_fan_5",
+    icon: "🎭",
+    name: "Historical Enthusiast",
+    description: "Added 5 Historical entries — your journey begins!",
+  },
+
+  // 🎧 EXPERIENCE BADGES
+  {
+    id: "review_writer",
+    icon: "📝",
+    name: "Critic in the Making",
+    description: "Added your first review or note — sharing your thoughts!",
+  },
+  {
+    id: "note_taker",
+    icon: "🗒️",
+    name: "Detail Lover",
+    description: "Added notes for 10 entries — attention to detail!",
+  },
+  {
+    id: "deep_critic",
+    icon: "💬",
+    name: "Insightful Reviewer",
+    description: "25 notes or reviews — your insights stand out!",
+  },
+  {
+    id: "veteran_reviewer",
+    icon: "🏆",
+    name: "Veteran Reviewer",
+    description: "50 reviews written — your opinion carries weight!",
+  },
+  {
+    id: "master_reviewer",
+    icon: "🎯",
+    name: "Master Reviewer",
+    description: "100 reviews — the community looks up to your words!",
+  },
+
+  // 🏷️ EXPLORATION BADGES
+  {
+    id: "multi_type_explorer",
+    icon: "🧩",
+    name: "Multi-Media Explorer",
+    description: "Added entries in 4 different types — variety seeker!",
+  },
+  {
+    id: "diverse_collector",
+    icon: "🎭",
+    name: "Diverse Collector",
+    description: "Added entries across 8 genres — broad-minded taste!",
+  },
+  {
+    id: "balanced_collector",
+    icon: "⚖️",
+    name: "Balanced Collector",
+    description: "Maintained a balanced mix of all media types!",
+  },
+  {
+    id: "media_scholar",
+    icon: "📚",
+    name: "Media Scholar",
+    description: "Explored 50+ diverse media types — true researcher!",
+  },
+  {
+    id: "universal_explorer",
+    icon: "🌍",
+    name: "Universal Explorer",
+    description: "Explored all corners of media — universal taste!",
+  },
+
+  // 🧠 DISCOVERY BADGES
+  {
+    id: "first_foreign_language",
+    icon: "🌐",
+    name: "Global Viewer",
+    description: "Watched or read something in a new language!",
+  },
+  {
+    id: "first_unique_platform",
+    icon: "🧭",
+    name: "New Platform Explorer",
+    description: "Discovered a new platform — expanding your reach!",
+  },
+  {
+    id: "curious_mind",
+    icon: "🔍",
+    name: "Curious Mind",
+    description: "Explored 10 different platforms or categories!",
+  },
+  {
+    id: "trend_discoverer",
+    icon: "🚀",
+    name: "Trend Discoverer",
+    description: "Found and logged trending or unique media!",
+  },
+  {
+    id: "cultural_explorer",
+    icon: "🌏",
+    name: "Cultural Explorer",
+    description: "Explored media from 10+ different countries!",
+  },
+  {
+    id: "knowledge_seeker",
+    icon: "💡",
+    name: "Knowledge Seeker",
+    description: "Discovered 100+ unique entries — true learner!",
+  },
+];
