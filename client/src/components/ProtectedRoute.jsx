@@ -6,7 +6,6 @@ import { toast } from "react-hot-toast";
 export default function ProtectedRoute({ children }) {
   const { user } = useAuth();
   const location = useLocation();
-    console.log("🔒 Checking user auth:", user);
 
   if (!user) {
     return <Navigate to="/login" replace state={{ from: location }} />;
