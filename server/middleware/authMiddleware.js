@@ -1,44 +1,68 @@
-// middleware/authMiddleware.js
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+/* =========================================================
+   🔒 PROTECT — For all authenticated users
+========================================================= */
 const protect = async (req, res, next) => {
-  let token = null;
   try {
+    let token;
+
+    // Extract token from header
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")
     ) {
       token = req.headers.authorization.split(" ")[1];
-    } else if (req.cookies?.token) {
-      token = req.cookies.token;
     }
 
     if (!token) {
-      return res
-        .status(401)
-        .json({ message: "No token, authorization denied" });
+      return res.status(401).json({ message: "No token provided" });
     }
 
-    let decoded;
-    try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
-    } catch (err) {
-      console.warn("JWT verify failed:", err.message);
-      return res.status(401).json({ message: "Token invalid or expired" });
-    }
+    // Verify and decode token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    // Find user and attach to req.user
     const user = await User.findById(decoded.id).select("-password");
     if (!user) {
-      return res.status(401).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     req.user = user;
     next();
   } catch (err) {
-    console.error("Protect middleware error:", err);
-    res.status(500).json({ message: "Server error in auth middleware" });
+    res.status(401).json({
+      message: "Unauthorized access",
+      error: process.env.NODE_ENV !== "production" ? err.message : undefined,
+    });
   }
 };
 
-export default protect;
+/* =========================================================
+   🛡️ ADMIN-ONLY — Restrict access to admins
+========================================================= */
+const adminOnly = (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "User not authenticated" });
+    }
+
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Access denied. Admins only." });
+    }
+
+    next();
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error in admin middleware",
+      error: process.env.NODE_ENV !== "production" ? error.message : undefined,
+    });
+  }
+};
+
+/* =========================================================
+   ✅ EXPORTS
+========================================================= */
+export default protect;   // Default export for protect
+export { adminOnly };     // Named export for adminOnly
