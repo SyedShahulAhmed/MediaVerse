@@ -35,7 +35,7 @@ export const sendOTP = async (req, res) => {
 
     // Send via Resend API
     const { data, error } = await resend.emails.send({
-      from: "MediaVerse <onboarding@resend.dev>", // You can change this if domain verified
+      from: "MediaVerse <servereurope5678@gmail.com>", // You can change this if domain verified
       to: email,
       subject: "✅ Your MediaVerse OTP Code",
       html: `
