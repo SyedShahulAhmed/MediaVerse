@@ -1,127 +1,102 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import bcrypt from "bcryptjs";
 import OTP from "../models/otpModel.js";
-import dotenv from "dotenv";
-dotenv.config();
 
-// DEBUG ✅
+
+// ✅ Initialize Resend client
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// ✅ Debug environment
 console.log("📌 Loaded ENV:", {
-  GMAIL_USER: process.env.GMAIL_USER ? "✅ OK" : "❌ MISSING",
-  GMAIL_PASS: process.env.GMAIL_PASS ? "✅ OK" : "❌ MISSING",
+  RESEND_API_KEY: process.env.RESEND_API_KEY ? "✅ OK" : "❌ MISSING",
 });
 
-// ✅ SMTP Transporter with Debug Logs
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-  debug: true, // ✅ Print SMTP logs
-  logger: true, // ✅ More logging
-});
-
-// ✅ Test SMTP Connection Logging
-transporter.verify((err, success) => {
-  if (err) console.error("❌ SMTP VERIFY ERROR:", err);
-  else console.log("✅ SMTP SERVER READY:", success);
-});
-
-// ✅ SEND OTP (with Debug Logs)
+// ✅ SEND OTP
 export const sendOTP = async (req, res) => {
   const { email } = req.body;
+  console.log("📩 Incoming OTP request for:", email);
 
-  console.log("📩 Incoming OTP request!");
-  console.log("📧 Email received:", email);
-
-  if (!email) {
-    console.log("❌ No email provided!");
-    return res.status(400).json({ success: false, message: "Email required" });
-  }
+  if (!email)
+    return res
+      .status(400)
+      .json({ success: false, message: "Email is required" });
 
   try {
+    // Generate and hash OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log("🔐 Generated OTP:", otp);
-
     const hashedOTP = await bcrypt.hash(otp, 10);
-    console.log("✅ OTP hashed and stored");
 
     await OTP.findOneAndUpdate(
       { email },
       { otp: hashedOTP, createdAt: Date.now() },
       { upsert: true, new: true }
     );
+    console.log("✅ OTP generated and saved for:", email);
 
-    console.log("📦 OTP saved in DB for:", email);
-
-    const mailOptions = {
-      from: `"MediaVerse" <${process.env.GMAIL_USER}>`,
+    // Send via Resend API
+    const { data, error } = await resend.emails.send({
+      from: "MediaVerse <onboarding@resend.dev>", // You can change this if domain verified
       to: email,
-      subject: "✅ MediaVerse OTP Code",
-      html: `<h1>Your OTP is ${otp}</h1>`,
-    };
-
-    console.log("🚀 Sending email...");
-    console.log("📨 Mail Options:", mailOptions);
-
-    await transporter.sendMail(mailOptions);
-
-    console.log("✅ OTP Email sent successfully →", email);
-    return res.json({ success: true, message: "OTP sent successfully" });
-
-  } catch (error) {
-    console.error("🔥 ERROR SENDING OTP:", {
-      message: error.message,
-      stack: error.stack,
-      code: error.code,
-      response: error.response,
+      subject: "✅ Your MediaVerse OTP Code",
+      html: `
+        <div style="font-family:Arial, sans-serif; padding:20px; border-radius:10px; background:#f9f9f9;">
+          <h2 style="color:#6c63ff;">MediaVerse OTP Verification</h2>
+          <p>Your one-time password is:</p>
+          <h1 style="letter-spacing:3px; color:#222;">${otp}</h1>
+          <p>This code will expire in 5 minutes.</p>
+          <p style="font-size:12px; color:#666;">If you didn’t request this, please ignore this email.</p>
+        </div>
+      `,
     });
 
+    if (error) {
+      console.error("❌ Error sending email via Resend:", error);
+      throw error;
+    }
+
+    console.log("✅ OTP Email sent successfully:", data?.id || "No ID");
+    return res.json({ success: true, message: "OTP sent successfully" });
+
+  } catch (err) {
+    console.error("🔥 ERROR SENDING OTP:", err);
     return res.status(500).json({
       success: false,
       message: "Error sending OTP",
-      error: error.message,
+      error: err.message,
     });
   }
 };
 
-// ✅ VERIFY OTP (Extra Debug)
+// ✅ VERIFY OTP
 export const verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
-  console.log("🔍 Verifying OTP:", { email, otp });
+  console.log("🔍 Verifying OTP for:", email);
 
   try {
     const otpRecord = await OTP.findOne({ email });
-
-    if (!otpRecord) {
-      console.log("❌ No OTP entry found!");
-      return res.status(400).json({ success: false, message: "No OTP found" });
-    }
+    if (!otpRecord)
+      return res
+        .status(400)
+        .json({ success: false, message: "No OTP found for this email" });
 
     const expired = Date.now() - otpRecord.createdAt > 5 * 60 * 1000;
-    if (expired) {
-      console.log("⏳ OTP expired!");
-      return res.status(400).json({ success: false, message: "OTP expired" });
-    }
+    if (expired)
+      return res
+        .status(400)
+        .json({ success: false, message: "OTP expired" });
 
     const isValid = await bcrypt.compare(otp, otpRecord.otp);
-    if (!isValid) {
-      console.log("❌ OTP mismatch!");
-      return res.status(400).json({ success: false, message: "Invalid OTP" });
-    }
+    if (!isValid)
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid OTP" });
 
     await OTP.deleteOne({ email });
-    console.log("✅ OTP verified and deleted!");
+    console.log("✅ OTP verified and removed");
 
     return res.json({ success: true, message: "OTP verified successfully" });
-
-  } catch (error) {
-    console.error("🔥 VERIFY OTP ERROR:", error);
-    return res.status(500).json({ success: false, message: "OTP verification failed" });
+  } catch (err) {
+    console.error("🔥 VERIFY OTP ERROR:", err);
+    return res.status(500).json({ success: false, message: "Verification failed" });
   }
 };
