@@ -1,1 +1,1 @@
-MEDIAVERSE A MEDIA TRACKER - FOR MOVIES,SERIES,ANIME,BOOKS,GAMES
+MediaVerse — Your Ultimate Media Tracker for Movies, Series, Anime, Books, and Games.
