@@ -282,7 +282,8 @@ router.delete("/delete-account", protect, async (req, res) => {
     const userId = req.user._id;
     const { password } = req.body;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select("+password"); // ✅ critical fix
+
     if (!user)
       return res.status(404).json({ success: false, message: "User not found" });
 
@@ -292,7 +293,7 @@ router.delete("/delete-account", protect, async (req, res) => {
       googleId: user.googleId,
     });
 
-    // 🔹 If user has NO password AND has a googleId → block this API
+    // 🧩 Handle Google users
     if (!user.password && user.googleId) {
       return res.status(403).json({
         success: false,
@@ -300,34 +301,30 @@ router.delete("/delete-account", protect, async (req, res) => {
       });
     }
 
-    // 🔹 If user has NO password and no googleId (weird state)
+    // 🧩 Handle passwordless non-Google accounts
     if (!user.password && !user.googleId) {
       return res.status(400).json({
         success: false,
-        message: "Account missing password — cannot be deleted this way",
+        message: "This account has no password and cannot be deleted manually",
       });
     }
 
-    // 🔐 Must include password for validation
-    if (!password) {
+    // 🔐 Require password input
+    if (!password)
       return res
         .status(400)
         .json({ success: false, message: "Password is required" });
-    }
 
-    // 🔐 Validate bcrypt hash
+    // ✅ Validate bcrypt password
     const isMatch = await bcrypt.compare(password, user.password);
     console.log("🧩 Password match:", isMatch);
 
-    if (!isMatch) {
-      console.log("❌ Wrong password — stopping deletion");
-      return res.status(401).json({
-        success: false,
-        message: "Incorrect password — deletion aborted",
-      });
-    }
+    if (!isMatch)
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect password" });
 
-    // ✅ Only delete if password is correct
+    // ✅ Delete user + data
     await Media.deleteMany({ user: userId });
     await User.findByIdAndDelete(userId);
 
@@ -341,6 +338,7 @@ router.delete("/delete-account", protect, async (req, res) => {
     });
   }
 });
+
 
 
 
