@@ -287,11 +287,6 @@ router.delete("/delete-account", protect, async (req, res) => {
     if (!user)
       return res.status(404).json({ success: false, message: "User not found" });
 
-    console.log("🧠 User record:", {
-      email: user.email,
-      hasPassword: !!user.password,
-      googleId: user.googleId,
-    });
 
     // 🧩 Handle Google users
     if (!user.password && user.googleId) {
@@ -317,7 +312,7 @@ router.delete("/delete-account", protect, async (req, res) => {
 
     // ✅ Validate bcrypt password
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("🧩 Password match:", isMatch);
+
 
     if (!isMatch)
       return res
@@ -330,7 +325,6 @@ router.delete("/delete-account", protect, async (req, res) => {
 
     res.json({ success: true, message: "Account deleted successfully" });
   } catch (err) {
-    console.error("💥 Delete account error:", err);
     res.status(500).json({
       success: false,
       message: "Server error during account deletion",
