@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import API from "../api/axios.js";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ChangeUsernameForm from "../components/ChangeUsernameForm.jsx";
 import ChangePassword from "../components/ChangePassword.jsx";
@@ -64,27 +64,33 @@ export default function Settings() {
         return;
       }
 
-      const { data } = await API.delete("/auth/delete-account", {
+      // Make delete request with password
+      const res = await API.delete("/auth/delete-account", {
         headers: { Authorization: `Bearer ${token}` },
         data: { password },
       });
 
-      if (data.success) {
-        toast.success("Account deleted successfully");
-        localStorage.clear();
-        setTimeout(() => {
-          navigate("/signup");
-          window.location.reload();
-        }, 1200);
-      } else {
-        toast.error(data.message || "Failed to delete account");
+      // ⚡ Safety check — ensure response is valid
+      if (!res?.data?.success) {
+        toast.error(res?.data?.message || "Incorrect password. Try again.");
+        return;
       }
+
+      // ✅ If successful deletion confirmed
+      toast.success("Account deleted successfully");
+      localStorage.clear();
+      setTimeout(() => {
+        navigate("/signup");
+        window.location.reload();
+      }, 1200);
     } catch (err) {
       console.error("Delete error:", err);
-      toast.error(
+      const msg =
         err.response?.data?.message ||
-          "Incorrect password or server error"
-      );
+        (err.response?.status === 401
+          ? "Incorrect password"
+          : "Server error. Try again.");
+      toast.error(msg);
     } finally {
       setDeleting(false);
       setPassword("");
@@ -95,7 +101,30 @@ export default function Settings() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0e] via-[#101018] to-[#1a1a22] text-white flex flex-col md:flex-row">
-
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            background: "#111",
+            color: "#fff",
+            border: "1px solid #6b21a8",
+            fontFamily: "Outfit, sans-serif",
+          },
+          success: {
+            iconTheme: {
+              primary: "#a855f7",
+              secondary: "#fff",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#ef4444",
+              secondary: "#fff",
+            },
+          },
+        }}
+      />
       {/* 🧭 SIDEBAR */}
       <aside className="w-full md:w-64 border-r border-[#2a2a36]/80 bg-[#111118]/60 backdrop-blur-md p-6 md:min-h-screen">
         <h2 className="text-xl font-bold bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 text-transparent bg-clip-text mb-8">
@@ -118,7 +147,6 @@ export default function Settings() {
       {/* 🧩 MAIN CONTENT */}
       <main className="flex-1 flex justify-center px-6 py-12">
         <div className="w-full max-w-2xl space-y-10">
-
           {/* 🔤 Change Username */}
           <section className="p-8 bg-[#131318]/70 border border-purple-800/40 rounded-3xl shadow-[0_0_40px_rgba(155,92,246,0.25)] backdrop-blur-md transition-all hover:shadow-[0_0_50px_rgba(155,92,246,0.35)]">
             <h2 className="text-lg font-semibold text-purple-400 mb-4">
@@ -194,8 +222,9 @@ export default function Settings() {
               ⚠️ Danger Zone
             </h2>
             <p className="text-gray-400 text-sm mb-6">
-              Deleting your account will permanently remove your profile, badges, and all your media data.
-              This action <strong className="text-red-500">cannot</strong> be undone.
+              Deleting your account will permanently remove your profile,
+              badges, and all your media data. This action{" "}
+              <strong className="text-red-500">cannot</strong> be undone.
             </p>
             <button
               onClick={() =>
@@ -216,9 +245,7 @@ export default function Settings() {
       >
         <div
           className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[9999]"
-          onClick={() =>
-            document.getElementById("deleteConfirmModal").close()
-          }
+          onClick={() => document.getElementById("deleteConfirmModal").close()}
         >
           <div
             className="bg-[#131318] text-white p-6 rounded-2xl border border-red-700/40 w-[90%] max-w-sm shadow-[0_0_40px_rgba(239,68,68,0.4)] animate-[zoomIn_0.3s_ease-out]"
@@ -270,8 +297,11 @@ export default function Settings() {
                   ⚠️ Final Confirmation
                 </h2>
                 <p className="text-gray-300 text-sm text-center mb-6">
-                  This action <span className="text-red-500 font-semibold">cannot be undone</span>. 
-                  Are you sure you want to permanently delete your account?
+                  This action{" "}
+                  <span className="text-red-500 font-semibold">
+                    cannot be undone
+                  </span>
+                  . Are you sure you want to permanently delete your account?
                 </p>
                 <div className="flex gap-4 mt-4">
                   <button

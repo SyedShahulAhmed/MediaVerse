@@ -24,7 +24,7 @@ import AdminDashboard from "./pages/AdminDashboard.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import { Toaster } from "react-hot-toast";
-import VerifyOTP from "./pages/VerifyOTP.jsx";
+// import VerifyOTP from "./pages/VerifyOTP.jsx";
 
 export default function App() {
   return (
@@ -67,8 +67,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/verify-otp" element={<VerifyOTP />} />
+          {/* <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} /> */}
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/profile/badges" element={<BadgesPage />} />
           <Route path="/followers" element={<Followers />} />

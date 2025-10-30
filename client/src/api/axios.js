@@ -13,6 +13,8 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
+
+
 // 👥 Follow routes — returns JSON directly
 export const followUser = async (userId) => {
   const { data } = await API.post(`/users/follow/${userId}`);

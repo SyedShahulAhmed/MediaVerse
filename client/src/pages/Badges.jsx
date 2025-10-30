@@ -79,15 +79,11 @@ export default function BadgesPage() {
   }, [checkForNewBadges]);
 
   // 🔄 Manual Refresh (Full Page)
-  const handleRefresh = async () => {
-    try {
-      setRefreshing(true);
-      await fetchBadges();
-      setTimeout(() => setRefreshing(false), 600);
-    } catch (err) {
-      console.error("Error refreshing badges:", err);
-      setRefreshing(false);
-    }
+  const handleRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      window.location.reload(); // 🔁 Reloads entire window
+    }, 600);
   };
 
   // 🌀 Loader
