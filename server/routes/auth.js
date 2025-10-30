@@ -251,22 +251,22 @@ router.get("/me", protect, async (req, res) => {
  * @route   POST /api/auth/check-availability
  * @desc    Check if username or email already exists
  */
-router.post("/check-availability", async (req, res) => {
-  try {
-    const { username, email } = req.body;
-    const existing = await User.findOne({
-      $or: [{ username: username.toLowerCase() }, { email }],
-    });
+// router.post("/check-availability", async (req, res) => {
+//   try {
+//     const { username, email } = req.body;
+//     const existing = await User.findOne({
+//       $or: [{ username: username.toLowerCase() }, { email }],
+//     });
 
-    if (existing) {
-      return res.json({ available: false, message: "Username or email taken" });
-    }
+//     if (existing) {
+//       return res.json({ available: false, message: "Username or email taken" });
+//     }
 
-    res.json({ available: true });
-  } catch (err) {
-    res.status(500).json({ available: false, message: "Server error", error: err.message });
-  }
-});
+//     res.json({ available: true });
+//   } catch (err) {
+//     res.status(500).json({ available: false, message: "Server error", error: err.message });
+//   }
+// });
 
 /* =========================================================
    🗑️ ACCOUNT DELETION
@@ -281,28 +281,41 @@ router.delete("/delete-account", protect, async (req, res) => {
   try {
     const userId = req.user._id;
     const { password } = req.body;
-
-    if (!password && req.user.password !== undefined) {
-      return res.status(400).json({ message: "Password is required to delete account" });
-    }
+    console.log("Password received:", password);
 
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user)
+      return res.status(404).json({ success: false, message: "User not found" });
 
+    // Google user (no password field)
     if (!user.password) {
       await Media.deleteMany({ user: userId });
       await User.findByIdAndDelete(userId);
-      return res.json({ success: true, message: "Google-linked account deleted successfully" });
+      return res.json({
+        success: true,
+        message: "Google-linked account deleted successfully",
+      });
     }
 
+    if (!password)
+      return res
+        .status(400)
+        .json({ success: false, message: "Password is required" });
+
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: "Incorrect password" });
+    console.log("Password match:", isMatch);
+
+    if (!isMatch)
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect password" });
 
     await Media.deleteMany({ user: userId });
     await User.findByIdAndDelete(userId);
 
     res.json({ success: true, message: "Account deleted successfully" });
   } catch (err) {
+    console.error("Delete account error:", err);
     res.status(500).json({
       success: false,
       message: "Server error during account deletion",
@@ -310,5 +323,6 @@ router.delete("/delete-account", protect, async (req, res) => {
     });
   }
 });
+
 
 export default router;

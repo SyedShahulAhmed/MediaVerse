@@ -26,7 +26,7 @@ import userRoutes from "./routes/user.js";
 import badgeRoutes from "./routes/badge.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import communityRoutes from "./routes/communityRoutes.js";
-import otpRoutes from "./routes/otpRoutes.js";
+// import otpRoutes from "./routes/otpRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import passwordRoutes from "./routes/passwordRoutes.js";
 
@@ -60,7 +60,7 @@ app.get("/", (req, res) => {
    🚏 ROUTES
 ========================================================= */
 app.use("/api/admin", adminRoutes);
-app.use("/api/otp", otpRoutes);
+// app.use("/api/otp", otpRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/users", userRoutes);
