@@ -281,55 +281,67 @@ router.delete("/delete-account", protect, async (req, res) => {
   try {
     const userId = req.user._id;
     const { password } = req.body;
-    console.log("🧠 Received password:", password);
 
     const user = await User.findById(userId);
     if (!user)
       return res.status(404).json({ success: false, message: "User not found" });
 
-    // 🔹 Handle Google accounts (no password stored)
-    if (!user.password) {
-      await Media.deleteMany({ user: userId });
-      await User.findByIdAndDelete(userId);
-      return res.json({
-        success: true,
-        message: "Google-linked account deleted successfully",
+    console.log("🧠 User record:", {
+      email: user.email,
+      hasPassword: !!user.password,
+      googleId: user.googleId,
+    });
+
+    // 🔹 If user has NO password AND has a googleId → block this API
+    if (!user.password && user.googleId) {
+      return res.status(403).json({
+        success: false,
+        message: "Google-linked accounts cannot delete via password route",
       });
     }
 
-    // 🔹 Require password for normal users
+    // 🔹 If user has NO password and no googleId (weird state)
+    if (!user.password && !user.googleId) {
+      return res.status(400).json({
+        success: false,
+        message: "Account missing password — cannot be deleted this way",
+      });
+    }
+
+    // 🔐 Must include password for validation
     if (!password) {
       return res
         .status(400)
         .json({ success: false, message: "Password is required" });
     }
 
-    // 🔐 Validate password
+    // 🔐 Validate bcrypt hash
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("🧩 Password match result:", isMatch);
+    console.log("🧩 Password match:", isMatch);
 
     if (!isMatch) {
-      console.log("❌ Wrong password — aborting deletion");
-      return res
-        .status(401)
-        .json({ success: false, message: "Incorrect password" });
+      console.log("❌ Wrong password — stopping deletion");
+      return res.status(401).json({
+        success: false,
+        message: "Incorrect password — deletion aborted",
+      });
     }
 
     // ✅ Only delete if password is correct
     await Media.deleteMany({ user: userId });
     await User.findByIdAndDelete(userId);
-    console.log("✅ Account deleted:", user.email);
 
-    return res.json({ success: true, message: "Account deleted successfully" });
+    res.json({ success: true, message: "Account deleted successfully" });
   } catch (err) {
     console.error("💥 Delete account error:", err);
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: "Server error during account deletion",
       error: err.message,
     });
   }
 });
+
 
 
 export default router;
