@@ -101,7 +101,6 @@ npm run dev
 * 🔔 In-app notifications
 * 💬 Comment & Reaction System
 * 🌐 Multi-language Support
-* 📱 Progressive Web App (PWA)
 * 🤖 Smart Recommendations
 
 ## 🤝 **Contributing**
