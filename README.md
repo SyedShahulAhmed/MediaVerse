@@ -15,7 +15,7 @@
 ## 🚀 **Live Website**
 <p align="center">
   🌐 <b>Experience MediaVerse Live:</b><br>
-  👉 <a href="https://mediaverse-seven.vercel.app/" target="_blank"><b>Click Here to Visit the Website</b></a>
+  👉 <a href="https://mediaverse-seven.vercel.app/" target="_blank"><b> Visit the Website</b></a>
 </p>
 
 ## 🎬 **About MediaVerse**
