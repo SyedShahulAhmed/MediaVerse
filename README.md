@@ -19,7 +19,7 @@
 </p>
 
 ## 🎬 **About MediaVerse**
-🎬 MediaVerse is a smart MERN-powered platform to track, analyze, and share your favorite 🎥 movies, 📺 series, 🎞️ anime, 📚 books, and 🎮 games — all in one sleek, personalized hub.
+🎬 MediaVerse is a MERN-powered platform to track, analyze, and share your favorite 🎥 movies, 📺 series, 🎞️ anime, 📚 books, and 🎮 games — all in one sleek, personalized hub.
 
 
 ## 💎 **Features at a Glance**
