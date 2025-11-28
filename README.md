@@ -16,19 +16,7 @@
 <p align="center">
   🌐 <b>Experience MediaVerse Live:</b><br>
   <p align="center">
-  <a href="https://mediaverse-seven.vercel.app/" target="_blank"
-     style="
-        background: #a020f0;
-        padding: 10px 22px;
-        border-radius: 10px;
-        color: white;
-        font-weight: 700;
-        text-decoration: none;
-        font-size: 16px;
-        display: inline-block;
-     ">
-     🔗 Visit the Website
-  </a>
+ 👉 <a href="https://mediaverse-seven.vercel.app/" target="_blank"><b> Visit the Website </b></a>
 </p>
 
 </p>
